@@ -1,4 +1,10 @@
 terraform {
+  backend "s3" {
+    bucket = "param2-tf-state"
+    key    = "new_states/new_terraform.tfstate"
+    region = "us-east-1"
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -39,9 +45,9 @@ resource "aws_subnet" "my_new_subnet" {
 }
 
 resource "aws_instance" "my_new_ec2_instance" {
-  ami = "ami-0947d2ba12ee1ff75"
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.my_new_subnet.id
+  ami                    = "ami-0947d2ba12ee1ff75"
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.my_new_subnet.id
   vpc_security_group_ids = [aws_security_group.my_new_group.id]
 
   tags = {
