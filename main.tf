@@ -19,7 +19,7 @@ provider "aws" {
 }
 
 module "my_new_alpine_ec2_instance" {
-  source = "./modules/new_alpine_ec2_instance"
+  source = "git::https://github.com/kanthri/terraform-modules.git"
 
   ec2_tags = {
     Name = "my_new_alpine_ec2_instance"
