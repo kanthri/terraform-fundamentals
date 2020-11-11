@@ -3,6 +3,8 @@ terraform {
     bucket = "edvins1-tf-state"
     key    = "vpc/terraform.tfstate"
     region = "us-east-1"
+
+    dynamodb_table = "state-locker"
   }
   required_providers {
     aws = {
