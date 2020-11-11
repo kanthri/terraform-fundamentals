@@ -18,6 +18,10 @@ provider "aws" {
   region  = "us-east-1"
 }
 
+resource "aws_s3_bucket" "tf_name_s3" {
+  
+}
+
 module "my_new_alpine_ec2_instance" {
   source = "git::https://github.com/kanthri/terraform-modules.git"
 
