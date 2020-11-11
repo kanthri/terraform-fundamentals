@@ -1,10 +1,9 @@
 terraform {
   backend "s3" {
-    bucket = "param2-tf-state"
-    key    = "new_states/new_terraform.tfstate"
+    bucket = "edvins1-tf-state"
+    key    = "vpc/terraform.tfstate"
     region = "us-east-1"
   }
-
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -12,20 +11,16 @@ terraform {
     }
   }
 }
-
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
-
-resource "aws_s3_bucket" "tf_name_s3" {
-  
-}
-
-module "my_new_alpine_ec2_instance" {
-  source = "git::https://github.com/kanthri/terraform-modules.git"
-
-  ec2_tags = {
-    Name = "my_new_alpine_ec2_instance"
+resource "aws_vpc" "vpc_remote_data_source_example" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "vpc_remote_data_source_example"
   }
+}
+output "vpc_id" {
+  value = aws_vpc.vpc_remote_data_source_example.id
 }
