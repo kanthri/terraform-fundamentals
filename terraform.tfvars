@@ -1,0 +1,1 @@
+ec2_name = "my_alpine_instance_wk"
