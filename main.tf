@@ -30,7 +30,7 @@ resource "aws_subnet" "my_subnet" {
   vpc_id     = aws_vpc.my_vpc.id
 }
 resource "aws_instance" "my_ec2_instance" {
-  ami                    = local.ec2_ami
+  ami                    = "ami-c50e37be"
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.my_subnet.id
   vpc_security_group_ids = [aws_security_group.my_group.id]
