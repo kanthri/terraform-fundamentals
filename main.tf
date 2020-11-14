@@ -17,21 +17,21 @@ provider "aws" {
 }
 
 data "terraform_remote_state" "base_networking" {
-backend = "s3"
+  backend = "s3"
 
-config = {
+  config = {
     bucket = "edvins1-tf-state"
     key    = "vpc/terraform.tfstate"
     region = "us-east-1"
-}
+  }
 
 }
 
 #resource "aws_vpc" "my_vpc" {
- # cidr_block = "10.0.0.0/16"
-  #tags = {
-   # Name = "my_vpc"
-  #}
+# cidr_block = "10.0.0.0/16"
+#tags = {
+# Name = "my_vpc"
+#}
 #}
 resource "aws_security_group" "my_group" {
   name   = "my_group"
