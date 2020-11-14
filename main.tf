@@ -15,19 +15,31 @@ provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
-resource "aws_vpc" "my_vpc" {
-  cidr_block = "10.0.0.0/16"
-  tags = {
-    Name = "my_vpc"
-  }
+
+data "terraform_remote_state" "base_networking" {
+backend = "s3"
+
+config = {
+    bucket = "edvins1-tf-state"
+    key    = "vpc/terraform.tfstate"
+    region = "us-east-1"
 }
+
+}
+
+#resource "aws_vpc" "my_vpc" {
+ # cidr_block = "10.0.0.0/16"
+  #tags = {
+   # Name = "my_vpc"
+  #}
+#}
 resource "aws_security_group" "my_group" {
   name   = "my_group"
-  vpc_id = aws_vpc.my_vpc.id
+  vpc_id = data.terraform_remote_state.base_networking.outputs.vpc_id
 }
 resource "aws_subnet" "my_subnet" {
   cidr_block = "10.0.0.0/16"
-  vpc_id     = aws_vpc.my_vpc.id
+  vpc_id     = data.terraform_remote_state.base_networking.outputs.vpc_id
 }
 resource "aws_instance" "my_ec2_instance" {
   ami                    = "ami-c50e37be"
