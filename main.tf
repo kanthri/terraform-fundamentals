@@ -42,6 +42,18 @@ resource "aws_subnet" "my_subnet" {
   vpc_id     = data.terraform_remote_state.base_networking.outputs.vpc_id
 }
 resource "aws_instance" "my_ec2_instance" {
+
+  provisioner "file" {
+    source = "script.sh"
+    destination = "/tmp/script.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod u+x /tmp/script.sh",
+      "/tmp/script.sh"
+    ]
+  }
   ami                    = "ami-c50e37be"
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.my_subnet.id
